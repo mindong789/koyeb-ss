@@ -1,6 +1,6 @@
 {
   "inbounds": [{
-    "port": 16823,
+    "port": 443,
     "protocol": "vmess",
     "settings": {
       "clients": [
@@ -11,10 +11,18 @@
       ]
     },
     "streamSettings": {
-      "network": "tcp"
+      "network": "ws",
+      "wsSettings": {
+        "path": "/v2ray",
+        "headers": {
+          "Host": "01.proxy.koyeb.app"
+        }
+      },
+      "security": "tls"
     }
   }],
   "outbounds": [{
     "protocol": "freedom"
   }]
 }
+
