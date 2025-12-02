@@ -2,8 +2,8 @@ FROM shadowsocks/shadowsocks-libev
 
 USER root
 
-# 安装 wget 以便下载 v2ray-plugin
-RUN apt-get update && apt-get install -y wget
+# 修正部分：使用 apk (Alpine包管理器) 替代 apt-get，并安装 wget 和 tar
+RUN apk add --no-cache wget tar ca-certificates
 
 # 下载并安装 v2ray-plugin
 RUN wget -O /tmp/v2ray-plugin.tar.gz https://github.com/shadowsocks/v2ray-plugin/releases/download/v1.3.2/v2ray-plugin-linux-amd64-v1.3.2.tar.gz && \
@@ -14,8 +14,7 @@ RUN wget -O /tmp/v2ray-plugin.tar.gz https://github.com/shadowsocks/v2ray-plugin
 
 USER nobody
 
-# 启动命令：使用环境变量配置，强制监听 0.0.0.0
-# 注意：Koyeb 会自动注入 PORT 环境变量，我们将其传递给 ss-server
+# 启动命令保持不变
 CMD exec ss-server \
     -s 0.0.0.0 \
     -p $PORT \
